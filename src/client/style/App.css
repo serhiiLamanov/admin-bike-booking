@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css?family=Saira");
+@import url("https://fonts.googleapis.com/css?family=Saira Stencil One");
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+#root {
+  font-family: 'Saira', sans-serif;
+  font-size: 14px;
+  --primary-color: #E8E8E8;
+  --dark-bg-color: #696969;
+  --light-font-color: white;
+  --separator-color: #C4C4C4;
+}
+
+h1{
+  color: var(--primary-color);
+  font-family: 'Saira Stencil One', sans-serif;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+h2{
+  font-size: 20px;
+}
+h1, h2{
+  margin: 0;
+}
+
+header, footer{
+  background-color: var(--dark-bg-color);
+  padding: 10px;
+}
+footer{
+  text-align: right;
+  color: var(--light-font-color);
+}
+footer span{
+  color: #CBCACA;
+}
+main{
+  display: flex;
+}
+main>ul{
+  min-width: 640px;
+  height: 640px;
+  padding-left: 3px;
+  margin: 0;
+  border-right: 1px solid var(--separator-color);
+}

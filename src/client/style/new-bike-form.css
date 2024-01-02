@@ -1,0 +1,36 @@
+form{
+  display: grid;
+  margin: 10px;
+  grid-gap: 10px;
+  border-bottom: 1px solid var(--separator-color);
+  padding-bottom: 16px;
+}
+
+form input,
+form button,
+form textarea{
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: none;
+  padding: 5px 15px;
+}
+
+form input,
+form button{
+  width: 240px;
+}
+
+form input,
+form textarea{
+  background-color: var(--primary-color);
+}
+
+form button{
+  background-color: var(--dark-bg-color);
+  color: var(--light-font-color);
+  text-transform: uppercase;
+}
+
+form textarea{
+  grid-column: 1/3;
+}
