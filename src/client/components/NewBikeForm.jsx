@@ -23,7 +23,7 @@ export default function NewBikeForm({fetchCallback, checkIdUniqueness}){
             <input type="color" name="color" placeholder="Color" required/>
             <input type="number" name="wheelSize" placeholder="Wheel size" required min="0" max="914"/>
             <input type="number" name="price" placeholder="Price" required min="0" step="0.01"/>
-            <input type="text" name="id" placeholder="ID (slug): ХХХХХХХХХХХХХ" required minLength="5" pattern="\w+" onChange={validateId}/>
+            <input type="text" name="_id" placeholder="ID (slug): ХХХХХХХХХХХХХ" required minLength="5" pattern="\w+" onChange={validateId}/>
             <textarea name="description" placeholder="Description" cols="30" rows="5" required minLength="5"></textarea>
             <button type="submit">save</button>
             <button type="reset">clear</button>

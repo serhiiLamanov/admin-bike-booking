@@ -2,25 +2,25 @@ import '../style/bike.css'
 
 export default function Bike({bike, changeBikeStatus, deleteBike}){
 
-    const {name, type, color, status, price, id} = bike
-    
+    const {name, type, color, status, price, _id} = bike
+    console.log(status)
     const formattedPrice = Number(price).toFixed(2).padStart(5, "0")
 
     return(
         <li className={`bike bike-${status}`}>
             <div>
                 <p><strong>{name}</strong> - {type}({color})</p>
-                <p className="bike-id">ID:{id}</p>
+                <p className="bike-id">ID:{_id}</p>
                 <p className="bike-status">STATUS 
-                    <select initialvalue={status} onChange={e => changeBikeStatus(id, e.target.value)}>
-                        <option value="available">Available</option>
-                        <option value="busy">Busy</option>
-                        <option value="unavailable">Unavailable</option>
+                    <select initialvalue={status} onChange={e => changeBikeStatus(_id, e.target.value)}>
+                        <option value="available" selected={status=="available"}>Available</option>
+                        <option value="busy" selected={status=="busy"}>Busy</option>
+                        <option value="unavailable" selected={status=="unavailable"}>Unavailable</option>
                     </select>
                 </p>
             </div>
             <div className="bike-right-col">
-                <button onClick={() => deleteBike(id)}>×</button>
+                <button onClick={() => deleteBike(_id)}>×</button>
                 <p>{formattedPrice} UAH/hr.</p>
             </div>
         </li>

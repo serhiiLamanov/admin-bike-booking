@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../style/App.css'
 import Bike from './bike'
 import NewBikeForm from './NewBikeForm'
@@ -7,19 +7,64 @@ import Statistics from './Statistics'
 function App() {
   const [bikes, setBikes] = useState([])
 
-  const saveNewBike = bike => {
-    setBikes(bikes  => [bike, ...bikes])
+  useEffect( () =>{
+    const loadBikes = async() =>{
+       try{
+        const response = await fetch("/bikes")
+        const bikes = await response.json()
+        setBikes(bikes)
+      }catch(err){
+        console.error(err)
+      }
+    }
+    loadBikes()   
+  }, [])
+
+  const saveNewBike = async bike => {
+    const response = await fetch("/bikes", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(bike)
+    })
+    const savedBike = await response.json()
+    setBikes(bikes  => [savedBike, ...bikes])
   }
 
-  const changeBikeStatus = (id, status) => setBikes(bikes => {
-    const newBikes = [...bikes]
-    newBikes[newBikes.findIndex( bike => bike.id == id)].status = status
-    return newBikes
-  })
+  const changeBikeStatus = async (_id, status) => {
+    const response = await fetch(`/bikes/${_id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({status: status})
+    })
+    if(response.ok){
+      setBikes(bikes => {
+        const newBikes = [...bikes]
+        newBikes[newBikes.findIndex( bike => bike._id == _id)].status = status
+        return newBikes
+      })
+    }else{
+      console.log("bike saving failed",response.status)
+    }
+    }
 
-  const deleteBike = id => setBikes(bikes => bikes.filter(bike => bike.id != id))
+  const deleteBike = async _id => {
+    const response = await fetch(`/bikes/${_id}`, {
+      method: "DELETE"
+    })
 
-  const checkIdUniqueness = id => bikes.some(bike => bike.id == id)
+    if(response.ok){
+      setBikes(bikes => bikes.filter(bike => bike._id != _id))
+    }else{
+      console.log("bike deleting failed", response.status)
+    }
+    
+  }
+
+  const checkIdUniqueness = _id => bikes.some(bike => bike._id == _id)
 
   return (
     <>
@@ -29,7 +74,7 @@ function App() {
       <main>
         <ul>
           {bikes.map(bike => 
-            <Bike bike={bike} key={bike.id} changeBikeStatus={changeBikeStatus} deleteBike={deleteBike}/>
+            <Bike bike={bike} key={bike._id} changeBikeStatus={changeBikeStatus} deleteBike={deleteBike}/>
           )}
         </ul>
         <div>
